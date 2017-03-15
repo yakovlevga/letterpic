@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/jquery.letterpic.min.js"></script>
+    <script>
+        $(function() {
+            $(".userpic-letter").letterpic();
+            $(".userpic-letter-custom").letterpic({
+                colors: ["#000", "#111", "#222", "#333" ],
+                font: "Tahoma",
+                fontColor: "#94090D",
+                fontSize: 0.3
+            });
+        });
+    </script>
+
+    <style>
+        .userpic-letter-custom, .userpic-letter {
+            width: 60px;
+            height: 60px;
+        }
+
+        .userpic-round {
+            border-radius: 50%;
+        }        
+
+        .message {
+            width: 400px;
+            margin-bottom: 16px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 1rem;
+        }
+
+        .message:after {
+            visibility: hidden;
+            display: block;
+            content: "";
+            clear: both;
+            height: 0;
+        }
+
+        .message .message-img {
+            width: 60px;
+            margin-right: 16px;
+            float: left;
+        }
+
+        .message .message-content {
+            width: 324px;
+            float: right;
+        }
+
+        .message .message-content .message-content-text { 
+            font-size: 0.8rem;            
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Default settings</h2>    
+    <pre>
+        Just call $(".userpic-letter").letterpic();
+    </pre>
+    <div class="message">
+        <div class="message-img">
+            <canvas class="userpic-letter userpic-round" title="Jon Snow" data-userid="1"></canvas>
+        </div>
+        <div class="message-content">
+            <strong>Jon Snow</strong>
+            <div class="message-content-text">
+                By default user's color is cached by users name (Jon Snow in this example).
+            </div>
+        </div>
+    </div>
+    
+    <div class="message">
+        <div class="message-img">
+            <div class="userpic-letter userpic-round" title="Jon Snow" data-userid="1"></div>
+        </div>
+        <div class="message-content">
+            <strong>Jon Snow</strong>
+            <div class="message-content-text">
+                If you afraid of situations when two different users can have same name,<br/>
+                you should add <i>data-userid=YourInternalUserId</i> attribute to canvas. In this way user's colors will be cached by this id, not by name.
+            </div>
+        </div>
+    </div>    
+
+    <div class="message">
+        <div class="message-img">
+            <span class="userpic-letter userpic-round" title="Jon Snow" data-userid="2"></span>
+        </div>
+        <div class="message-content">
+            <strong>Jon Snow</strong>
+            <div class="message-content-text">
+                For example, this user has same name, but different data-userid value.
+            </div>
+        </div>
+    </div>    
+
+    <div class="message">
+        <div class="message-img">
+            <canvas class="userpic-letter userpic-round" title="Arya Stark"></canvas>
+        </div>
+        <div class="message-content">
+            <strong>Arya Stark</strong>
+            <div class="message-content-text">Lorem ipsum</div>
+        </div>
+    </div>    
+
+    <div class="message">
+        <div class="message-img">
+            <img class="userpic-letter" src="" title="John Doe">
+        </div>
+        <div class="message-content">
+            <strong>John Doe</strong>
+            <div class="message-content-text">You could use letterpic to replace images with broken sources. 
+                Don't forget to place user name to <i>title</i> attribute.
+            </div>
+        </div>
+    </div>    
+
+    <h2>Custom settings</h2>
+    <pre>
+        Yoy could define custom color scheme, font color and family, and relative font size.
+        $(".userpic-letter-custom").letterpic({
+            colors: ["#000", "#111", "#222", "#333" ],
+            font: "Tahoma",
+            fontColor: "#94090D",
+            fontSize: 0.3
+        });
+    </pre>
+    <div class="message">
+        <div class="message-img">
+            <div class="userpic-letter-custom userpic-round" title="Jon Snow" data-userid="1"></div>
+        </div>
+        <div class="message-content">
+            <strong>Jon Snow</strong>
+            <div class="message-content-text">Lorem ipsum</div>
+        </div>
+    </div>    
+
+    <div class="message">
+        <div class="message-img">
+            <span class="userpic-letter-custom userpic-round" title="Jon Snow" data-userid="2"></span>
+        </div>
+        <div class="message-content">
+            <strong>‎Faceless Men</strong>
+            <div class="message-content-text">Lorem ipsum</div>
+        </div>
+    </div>    
+
+    <div class="message">
+        <div class="message-img">
+            <canvas class="userpic-letter-custom userpic-round" title="Arya Stark"></canvas>
+        </div>
+        <div class="message-content">
+            <strong>Arya Stark</strong>
+            <div class="message-content-text">Lorem ipsum</div>
+        </div>
+    </div>    
+</body>
+
+</html>
