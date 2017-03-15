@@ -8,15 +8,10 @@ Another way of using is to replace broken images by letter userpic.
 
 ### HTML
 
-By default user's color is cached by users name (Jon Snow in this example).
-If you afraid of situations when two different users can have same name,
-you should add *data-userid=YourInternalUserId* attribute to canvas. 
-In this way user's colors will be cached by this id, not by name.
-
 ```html
-<div class="letterpic" title="Jon Snow"></div>
-<canvas class="letterpic" title="Jon Snow"></canvas>
-<img class="letterpic" title="Jon Snow" src="ErrorImagePath.jpg"></div>
+    <div class="letterpic" title="Jon Snow"></div>
+    <canvas class="letterpic" title="Jon Snow"></canvas>
+    <img class="letterpic" title="Jon Snow" src="ErrorImagePath.jpg" />
 ```
 
 ### JavaScript (jQuery)
@@ -26,6 +21,16 @@ In this way user's colors will be cached by this id, not by name.
 ```
 
 ## Configuration
+
+By default user's color is cached by users name.
+If you afraid of situations when two different users can have same name,
+you should add *data-userid=YourInternalUserId* attribute to canvas. 
+In this way user's colors will be cached by this id, not by name.
+
+```html
+    <div class="letterpic" title="Alex" data-userid="123"></div>
+    <div class="letterpic" title="Alex" data-userid="99999"></div>
+```
 
 LetterPic offers few appearance configuration options. 
 You can change *color scheme*, *font family*, *font color* and *relative font size*:
