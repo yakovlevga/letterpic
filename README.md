@@ -4,6 +4,10 @@
 You can replace any html element with initials based userpick (e.g. George Yakovlev -> GA picture).
 Another way of using is to replace broken images by letter userpic.
 
+## Example
+
+![](resources/letterpic.png)
+
 ## Basic Usage
 
 ### HTML
