@@ -9,6 +9,7 @@ Another way of using, is to replace broken images by letter userpic.
 ![](resources/letterpic.png)
 
 ## Demo
+https://yakovlevga.github.io/letterpic/
 
 ## Basic Usage
 
