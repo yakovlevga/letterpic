@@ -1,12 +1,14 @@
 # jQuery LetterPic plugin
 > LetterPic is a small jQuery plugin that converts user's name to userpic, using it's initials.
 
-You can replace any html element with initials based userpick (e.g. George Yakovlev -> GA picture).
-Another way of using is to replace broken images by letter userpic.
+You can replace any html element with initials based userpic (e.g. George Yakovlev -> GA picture).
+Another way of using, is to replace broken images by letter userpic.
 
 ## Example
 
 ![](resources/letterpic.png)
+
+## Demo
 
 ## Basic Usage
 
@@ -37,7 +39,9 @@ In this way user's colors will be cached by this id, not by name.
 ```
 
 LetterPic offers few appearance configuration options. 
-You can change *color scheme*, *font family*, *font color* and *relative font size*:
+You can change *fill* property to change background fill style, possible values: *color*, *gradient* ot *image*.
+Also you can change *color scheme*, *font family*, *font color* and *relative font size*.
+For details look at our demo page.
 
 ```js
     $(".userpic-letter-custom").letterpic({

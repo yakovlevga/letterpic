@@ -4,119 +4,350 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
     <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/jquery.letterpic.min.js"></script>
+    <script src="js/jquery.letterpic.js"></script>
     <script>
         $(function() {
-            $(".userpic-letter").letterpic();
-            $(".userpic-letter-custom").letterpic({
-                colors: ["#000", "#111", "#222", "#333" ],
-                font: "Tahoma",
-                fontColor: "#94090D",
-                fontSize: 0.3
+            $(".letterpic").letterpic()
+
+            var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            function getRandomInitials() {
+                var name = "";
+                name += letters.charAt(Math.floor(Math.random() * letters.length));
+                name += " ";
+                name += letters.charAt(Math.floor(Math.random() * letters.length));
+                return name;
+            }
+
+            function addLetterpicEl($el) {
+                $el.append("<div class='letterpic' title='" + getRandomInitials() + "'></div>");
+            }
+
+            // gradient demo
+            var $gradientDemo = $(".gradient-demo");
+            for(var i = 0; i < 19; i++) {
+                addLetterpicEl($gradientDemo);                
+            }
+            $gradientDemo.find(".letterpic").letterpic();
+
+            // custom gradient demo
+            var $gradientCustomDemo = $(".gradient-custom-demo");
+            var customGradients = [
+                ["#fff", "#333", "#000", "#777"],
+                ["#aaafff", "#aaa777"],
+                ["#dddfff", "#ddd333", "#ddd777"],
+            ];
+            for(var i = 0; i < customGradients.length; i++) {
+                addLetterpicEl($gradientCustomDemo);                
+            }
+            $gradientCustomDemo.find(".letterpic").letterpic({
+                gradients: customGradients
             });
+
+            // colors demo            
+            var $colorDemo = $(".color-demo");
+            for(var i = 0; i < 19; i++) {
+                addLetterpicEl($colorDemo);                
+            }
+            $colorDemo.find(".letterpic").letterpic({ fill: 'color' });
+
+            // custom colors demo
+            var $colorCustomDemo = $(".color-custom-demo");
+            var customColors = [ "#111", "#222", "#333", "#444", "#555" ];
+            for(var i = 0; i < customColors.length; i++) {
+                addLetterpicEl($colorCustomDemo);                
+            }
+            $colorCustomDemo.find(".letterpic").letterpic({
+                fill: 'color',
+                colors: customColors
+            });
+
+            // image demo            
+            var $imageDemo = $(".image-demo");
+            for(var i = 0; i < 8; i++) {
+                addLetterpicEl($imageDemo);
+            }
+            $imageDemo.find(".letterpic").letterpic({ fill: 'image' });
+
+            // custom images demo
+            var images = [
+                "https://image.freepik.com/free-vector/floral-background-with-watercolor-leaves_1085-886.jpg",
+                "https://image.freepik.com/free-vector/watercolor-feathers-background_23-2147607455.jpg",
+                "https://image.freepik.com/free-vector/octopus-pattern-design_1235-151.jpg"
+            ];
+            var $imageCustomDemo = $(".image-custom-demo");
+            for(var i = 0; i < images.length; i++) {
+                addLetterpicEl($imageCustomDemo);
+            }
+            $imageCustomDemo.find(".letterpic").letterpic({ 
+                fill: 'image', 
+                images: images, 
+                fontColor: "#CCC",
+                imageOverlayColor: "rgba(0, 0, 0, .5)" });
+
         });
     </script>
 
     <style>
-        .userpic-letter-custom, .userpic-letter {
+        .letterpic {
             width: 60px;
             height: 60px;
-        }
-
-        .userpic-round {
-            border-radius: 50%;
-        }        
-
-        .message {
-            width: 400px;
-            margin-bottom: 16px;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 1rem;
-        }
-
-        .message:after {
-            visibility: hidden;
-            display: block;
-            content: "";
-            clear: both;
-            height: 0;
-        }
-
-        .message .message-img {
-            width: 60px;
-            margin-right: 16px;
-            float: left;
-        }
-
-        .message .message-content {
-            width: 324px;
-            float: right;
-        }
-
-        .message .message-content .message-content-text { 
-            font-size: 0.8rem;            
+            margin-right: 5px;         
+            border-radius: 30px;   
         }
     </style>
 
 </head>
 
 <body>
+    <div class="container">
+        <div class="row">        
+            <div class="col-md-10">
+                <h1 class="display-3 mt-4">jQuery LetterPic plugin.</h1>
+                <p class="lead">
+                    LetterPic converts usernames into canvas based avatar pictures.                    
+                </p>
+                
+                <h2 class="display-4 mt-4">Basic usage</h3>
+                <hr />
+                <p>                    
+                    Define html-element with users name in <code>title="Jhon Doe"</code> attribute.
+                    Then call .letterpic() on proper selector or image with your jquery selector.
+                </p>
 
-    <h2>Default settings</h2>    
-    <pre>
-        Just call $(".userpic-letter").letterpic();
-    </pre>
-    <div class="message">
-        <div class="message-img">
-            <canvas class="userpic-letter userpic-round" title="Jon Snow" data-userid="1"></canvas>
-        </div>
-        <div class="message-content">
-            <strong>Jon Snow</strong>
-            <div class="message-content-text">
-                By default user's color is cached by users name (Jon Snow in this example).
+                <h4 class="mt-2">Avatar caching by user name.</h5>
+
+                <div class="media mb-4">
+                    <div style="width:60px;" class="mr-3 text-center">
+                        <div class="letterpic" title="Jon Snow"/></div>
+                        <small>Jon Snow</small>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Avatar caching by user name.</h5>
+                        By default user's color is cached by user's name (Jon Snow in this example).
+                    </div>
+                </div>
+
+                <div class="media mb-4">
+                    <div style="width:60px;" class="mr-3 text-center">
+                        <div class="letterpic" title="Jon Snow"></div>
+                        <small>Jon Snow</small>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Avatar caching by user id</h5>
+                        This img has the same attribute <code>title="Jon Snow"</code>. So it's looks same too.
+                    </div>
+                </div>
+
+                <div class="media">
+                    <div style="width:60px;" class="mr-3 text-center">
+                        <div class="letterpic" title="Jon Snow" data-userid="1"></div>
+                        <small>Jon Snow</small>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Avatar caching</h5>
+                        To avoid collision situations, when two different users can have same name,<br/>
+                        you should add <code>data-userid=YourInternalUserId</code> attribute to element.<br> 
+                        In this way user's colors will be cached by this id, not by name.<br>
+                        For example, this user has same name, but different  <code>data-userid="1"</code> value.
+                    </div>
+                </div>
+
+                <h4 class="mt-2">Broken image replacement.</h5>
+                <p>
+                    You could use letterpic to replace images with broken sources. <br/>
+                    Don't forget to place user name to img <code>title</code> attribute.      
+                </p>
+                <div class="media">
+                    <div style="width:60px;" class="mr-3 text-center">
+                        <img class="letterpic" src="brokenImageUrl.jpg" title="Jon Snow" data-userid="1"/>
+                        <small>Jon Snow</small>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Broken image replacement</h5>
+                        There are wrong image <code>src="brokenImageUrl.jpg"</code> attribute.<br/>
+                        LetterPic replace it with letter avatar after loading error event.
+                    </div>
+                </div>
+
+
+                <h2 class="display-4 mt-4">Color, gradient or image background.</h2>
+                <hr/>
+                <h3>Gradients.</h4>
+                    <div>                
+                    <p>                    
+                        By default letterpic uses gradients as background. It has 19 predefined gradient color scheme,<br/>
+                        based on google material colors. You can change this scheme, just pass <code>gradients</code> to options on init.<br/>                    
+                    </p>
+                        
+                    <h5 class="mt-4">Default gradient backgrounds:</h5>
+                    <pre><code>
+                        $(".letterpic").letterpic();
+                        </code></pre>
+                    
+                    <div class="gradient-demo"></div>
+
+                    <h5 class="mt-4">Custom gradient backgrounds:</h5>
+                    You should pass array of arrays with gradient colors ([ ["#color1", "$color2", ...], [...], ...]).
+                    <pre><code>
+                        $(".letterpic").letterpic({
+                            gradients: [
+                                ["#fff", "#333", "#000", "#777"],
+                                ["#aaafff", "#aaa777"],
+                                ["#dddfff", "#ddd333", "#ddd777"],
+                            ]
+                        });</code></pre>
+                    <div class="gradient-custom-demo"></div>
+                </div>
+
+
+                <h3 class="mt-4">Colors.</h4>
+                <div>
+                    <p>
+                        If you want to use solid color as background, you show pass <code>fill: 'color'</code> parameter as option on init.
+                        By default letterpic has predefined color scheme with 19 colors, based on google material styles. <br/>
+                        You can change this scheme, just pass array of <code>colors: ["#color1", "#color2", ...]</code> to options on init.<br/>
+                    </p>
+
+                    <h5 class="mt-4">Default color backgrounds:</h5>
+                    <pre><code>
+                        $(".letterpic").letterpic({ fill: 'color' });
+                        </code></pre>
+                    
+                    <div class="color-demo"></div>
+
+                    <h5 class="mt-4">Custom color scheme:</h5>
+                    <pre><code>
+                        $(".letterpic").letterpic({
+                            fill: 'color',
+                            colors: [ "#111", "#222", "#333", "#444", "#555" ]
+                        });</code></pre>
+
+                    <div class="color-custom-demo"></div>
+                </div>
+
+
+                <h3 class="mt-4">Images.</h4>
+                <div>
+                    <p>
+                        Another possibility is to use image with <code>fill: 'image'</code> parameter as option on init.
+                        By default letterpic has few example background pattens from <a href="http://www.colourlovers.com/">colourlovers.com<a>.<br/>
+                        You can change this scheme, just pass array of <code>image: ["imageUrl1", "imageUrl2", ...]</code> to options on init.<br/>
+                        Try to define custom <code>fontColor: "#color"</code> and <code>imageOverlayColor: "#rgbaColor"</code> to increase the contrast of final image.
+                    </p>
+
+                    <h5 class="mt-4">Default image backgrounds:</h5>
+                    <pre><code>
+                        $(".letterpic").letterpic({ fill: 'image' });
+                        </code></pre>
+
+                    <div class="image-demo"></div>
+
+                    <h5 class="mt-4">Custom images (images taken from <a href="http://www.freepik.com/">freepik.com</a>):</h5>
+                    <pre><code>
+                        $(".letterpic").letterpic({
+                            fill: 'image',
+                            images: [
+                                    "https://image.freepik.com/free-vector/floral-background-with-watercolor-leaves_1085-886.jpg",
+                                    "https://image.freepik.com/free-vector/watercolor-feathers-background_23-2147607455.jpg",
+                                    "https://image.freepik.com/free-vector/octopus-pattern-design_1235-151.jpg"
+                                ],
+                            fontColor: "#CCC",
+                            imageOverlayColor: "rgba(0, 0, 0, .5)"
+                        });</code></pre>
+                    <div class="image-custom-demo"></div>
+                </div> 
+
+                <h2 class="display-4 mt-4">Options</h3>
+                <table class="table mb-4">
+                    <tr>
+                        <th>
+                            Option
+                        </th>
+                        <th>
+                            Default value
+                        </th>
+                        <th>
+                            Possible values
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td>fill</td>
+                        <td>'gradient'</td>
+                        <td>'color', 'gradient' or 'image'</td>
+                        <td>
+                            Background drawing style.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>colors</td>
+                        <td>Array of 19 predifined colors.</td>
+                        <td>Array of colors: ["#453445", "#546343", ...]</td>
+                        <td>Color scheme for color background. It works only if 'fill': 'color' passed to options.</td>
+                    </tr>
+
+                    <tr>
+                        <td>gradients</td>
+                        <td>Array of 19 predifined gradients.</td>
+                        <td>Array of array of colors: <br/>
+                            [["#111", "#222", ...],<br/> 
+                            [["#444", "#555", "#000", ...],<br/> 
+                            [["#453445", "#546343"],<br/> 
+                            ...]<br/> 
+                        </td>
+                        <td>Color scheme for gradient background. It works only if no 'fill' or 'fill': 'gradient' passed to options.</td>
+                    </tr>
+
+                    <tr>
+                        <td>images</td>
+                        <td>Array of 8 predifined images.</td>
+                        <td>Array of image urls: ["http://url1", "/images/img2", ...]</td>
+                        <td>Image array for image background. It works only if 'fill': 'image' passed to options.</td>
+                    </tr>
+
+                    <tr>
+                        <td>imageOverlayColor</td>
+                        <td>Transparent.</td>
+                        <td>RGBa color with transparency, e.g. 'rgba(0,0,0,.5))'</td>
+                        <td>Overlay color for 'fill': 'image'. Use it to increase the contrast of avatar.</td>
+                    </tr>
+
+                    <tr>
+                        <td>font</td>
+                        <td>'Arial'</td>
+                        <td>Font family name, e.g. 'Arial', 'Verdana', 'Tahomf'</td>
+                        <td>Font family for avatar text.</td>
+                    </tr>
+
+                    <tr>
+                        <td>fontColor</td>
+                        <td>'#fff'</td>
+                        <td>String with color, e.g. '#fff', '#000' and etc.</td>
+                        <td>Font color for avatar text.</td>
+                    </tr>
+
+                    <tr>
+                        <td>fontSize</td>
+                        <td>.45</td>
+                        <td>Relative size of font, any decimal in range from 0 to 1</td>
+                        <td>Relative size of font for avatar text</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-    
-    <div class="message">
-        <div class="message-img">
-            <div class="userpic-letter userpic-round" title="Jon Snow" data-userid="1"></div>
-        </div>
-        <div class="message-content">
-            <strong>Jon Snow</strong>
-            <div class="message-content-text">
-                If you afraid of situations when two different users can have same name,<br/>
-                you should add <i>data-userid=YourInternalUserId</i> attribute to canvas. In this way user's colors will be cached by this id, not by name.
-            </div>
-        </div>
-    </div>    
+<!--
 
     <div class="message">
         <div class="message-img">
-            <span class="userpic-letter userpic-round" title="Jon Snow" data-userid="2"></span>
-        </div>
-        <div class="message-content">
-            <strong>Jon Snow</strong>
-            <div class="message-content-text">
-                For example, this user has same name, but different data-userid value.
-            </div>
-        </div>
-    </div>    
-
-    <div class="message">
-        <div class="message-img">
-            <canvas class="userpic-letter userpic-round" title="Arya Stark"></canvas>
-        </div>
-        <div class="message-content">
-            <strong>Arya Stark</strong>
-            <div class="message-content-text">Lorem ipsum</div>
-        </div>
-    </div>    
-
-    <div class="message">
-        <div class="message-img">
-            <img class="userpic-letter" src="" title="John Doe">
+            <img class="userpic-letter userpic-small" src="" title="John Doe">
         </div>
         <div class="message-content">
             <strong>John Doe</strong>
@@ -148,7 +379,7 @@
 
     <div class="message">
         <div class="message-img">
-            <span class="userpic-letter-custom userpic-round" title="Jon Snow" data-userid="2"></span>
+            <span class="userpic-letter-custom userpic-round" title="Faceless Men"></span>
         </div>
         <div class="message-content">
             <strong>‎Faceless Men</strong>
@@ -164,7 +395,7 @@
             <strong>Arya Stark</strong>
             <div class="message-content-text">Lorem ipsum</div>
         </div>
-    </div>    
+    </div>    -->
 </body>
 
 </html>
