@@ -42,7 +42,7 @@ In this way user's colors will be cached by this id, not by name.
 LetterPic offers few appearance configuration options. 
 You can change *fill* property to change background fill style, possible values: *color*, *gradient* ot *image*.
 Also you can change *color scheme*, *font family*, *font color* and *relative font size*.
-For details look at our demo page.
+For details and more options: https://yakovlevga.github.io/letterpic/.
 
 ```js
     $(".userpic-letter-custom").letterpic({
