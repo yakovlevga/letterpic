@@ -1,5 +1,5 @@
-(function($) {
-    $.fn.letterpic = function(options) {
+(function ($) {
+    $.fn.letterpic = function (options) {
         var self = this;
 
         self.fillTypeColor = "color";
@@ -10,7 +10,7 @@
         var defaultFont = "Arial";
         var defaultFontColor = "#fff";
         var defaultFontStrokeColor = "#000";
-        var defaultFontSize = .45;        
+        var defaultFontSize = .45;
         var defaultColors = [
             "#F44336",
             "#673AB7",
@@ -59,7 +59,7 @@
         var settings = $.extend({
             colors: defaultColors,
             gradients: defaultGradients,
-            font: defaultFont,            
+            font: defaultFont,
             fontColor: defaultFontColor,
             fontSize: defaultFontSize,
             fill: getFillTypeFromOptions(options),
@@ -67,16 +67,16 @@
         }, options);
 
         // set default images
-        if(settings.fill == self.fillTypeImage) {            
-            if(!settings.fontStrokeColor)
+        if (settings.fill == self.fillTypeImage) {
+            if (!settings.fontStrokeColor)
                 settings.fontStrokeColor = defaultFontStrokeColor;
 
-            if(!settings.images || !settings.images.length) {
+            if (!settings.images || !settings.images.length) {
                 var defaultImgPath = "patterns";
                 var defaultImgCount = 8;
                 var defaultImgExt = ".png";
                 settings.images = [];
-                for(var i = 1; i <= defaultImgCount; i++) {
+                for (var i = 1; i <= defaultImgCount; i++) {
                     settings.images.push(defaultImgPath + "/" + i + defaultImgExt);
                 }
             }
@@ -87,11 +87,11 @@
         self.drawProviders[self.fillTypeGradient] = drawGradientBackground;
         self.drawProviders[self.fillTypeImage] = drawImageBackground;
 
-        this.each(function() {
+        this.each(function () {
             var $el = $(this);
 
-            if($el.is("img")) {
-                if(!isImageOk($el[0])) {
+            if ($el.is("img")) {
+                if (!isImageOk($el[0])) {
                     replaceWithCanvas($el);
                 }
                 else {
@@ -100,18 +100,18 @@
             }
             else {
                 replaceWithCanvas($el);
-            }            
+            }
         });
 
-        function getFillTypeFromOptions(options) {                              
-            if(options) {
-                if(options.colors) {
+        function getFillTypeFromOptions(options) {
+            if (options) {
+                if (options.colors) {
                     return self.fillTypeColor;
                 }
-                else if(options.gradients) {
+                else if (options.gradients) {
                     return self.fillTypeGradient;
                 }
-                else if(options.images) {
+                else if (options.images) {
                     return self.fillTypeImage;
                 }
             }
@@ -123,16 +123,16 @@
             var userId = $el.data().userid;
             var name = $el.attr("title");
 
-            if(!name) {
-                name = "";                
+            if (!name) {
+                name = "";
             }
-            else if(!userId) {
+            else if (!userId) {
                 userId = name;
             }
-            
+
             var info = cache[userId];
-            if(!info) {
-                info = {                    
+            if (!info) {
+                info = {
                     backgroundIdx: backgroundIdx++,
                     text: getInitials(name)
                 };
@@ -146,10 +146,10 @@
         function getInitials(name) {
             var splitted = name.split(" ");
             var result = splitted[0].charAt(0).toUpperCase();
-            if(splitted.length > 1) {
+            if (splitted.length > 1) {
                 result += splitted[1].charAt(0).toUpperCase();
             }
-            
+
             return result;
         }
 
@@ -161,18 +161,19 @@
         }
 
         function onImageError(event) {
-            replaceWithCanvas($(event.target));
+            var $img = $(event.target);
             $img.off("error", onImageError);
+            replaceWithCanvas($img);
         }
 
         function replaceWithCanvas($el) {
             var $canvas;
-            if($el.is("canvas")) {
+            if ($el.is("canvas")) {
                 $canvas = $el;
             }
             else {
                 $canvas = $("<canvas></canvas>");
-                $.each($el[0].attributes, function(i, attribute){
+                $.each($el[0].attributes, function (i, attribute) {
                     $canvas.attr(attribute.name, attribute.value);
                 });
                 $el.replaceWith($canvas);
@@ -183,29 +184,29 @@
         }
 
         function drawLetters($canvas, info) {
-            var canvas = $canvas[0];                        
+            var canvas = $canvas[0];
             var scale = window.devicePixelRatio;
             var canvasWidth = scale * $canvas.width(),
                 canvasHeight = scale * $canvas.height();
 
             var context = canvas.getContext("2d");
             context.scale(scale, scale);
-            
+
             $canvas.attr("width", canvasWidth);
             $canvas.attr("height", canvasHeight);
-            
+
             var fontSize = canvasWidth * settings.fontSize;
             context.font = fontSize + "px " + settings.font;
             context.textAlign = "center";
 
-            self.drawProviders[settings.fill](context, canvas, info, function() {
+            self.drawProviders[settings.fill](context, canvas, info, function () {
                 drawText(info.text, fontSize, context, canvasWidth, canvasHeight);
             });
         }
 
         function drawColorBackground(context, canvas, info, drawTextCallback) {
             context.fillStyle = settings.colors[info.backgroundIdx % settings.colors.length];
-            context.fillRect (0, 0, canvas.width, canvas.height);
+            context.fillRect(0, 0, canvas.width, canvas.height);
 
             drawTextCallback();
         }
@@ -215,38 +216,38 @@
             var gradientColors = settings.gradients[info.backgroundIdx % settings.gradients.length];
             gradient.addColorStop(0, gradientColors[0]);
             var gradientStep = 1 / (gradientColors.length - 1);
-            for(var i = 1; i < gradientColors.length - 1; i ++) {
+            for (var i = 1; i < gradientColors.length - 1; i++) {
                 gradient.addColorStop(i * gradientStep, gradientColors[i]);
             }
 
             gradient.addColorStop(1, gradientColors[gradientColors.length - 1]);
             context.fillStyle = gradient;
-            context.fillRect (0, 0, canvas.width, canvas.height);
+            context.fillRect(0, 0, canvas.width, canvas.height);
 
             drawTextCallback();
         }
 
         function drawImageBackground(context, canvas, info, drawTextCallback) {
             var img = new Image();
-            img.onload = function() {
+            img.onload = function () {
                 context.drawImage(img, 0, 0, canvas.width, canvas.height);
                 context.fillStyle = settings.imageOverlayColor;
-                context.fillRect (0, 0, canvas.width, canvas.height);
+                context.fillRect(0, 0, canvas.width, canvas.height);
 
-                drawTextCallback();                
-            }            
+                drawTextCallback();
+            }
             img.src = settings.images[info.backgroundIdx % settings.images.length];;
         }
 
         function drawText(text, fontSize, context, canvasWidth, canvasHeight) {
-            var posX =  canvasWidth / 2;
+            var posX = canvasWidth / 2;
             var posY = (fontSize + canvasHeight) * 0.45;
 
-            if(settings.fontStrokeColor) {
+            if (settings.fontStrokeColor) {
                 context.shadowColor = settings.fontStrokeColor;
                 context.shadowColor = "black";
-                context.shadowOffsetX = 0; 
-                context.shadowOffsetY = 0; 
+                context.shadowOffsetX = 0;
+                context.shadowOffsetY = 0;
                 context.shadowBlur = 3;
             }
 
@@ -254,4 +255,4 @@
             context.fillText(text, posX, posY);
         }
     };
-}( jQuery ));
+}(jQuery));
