@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>jQuery LetterPic plugin</title>
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="jQuery LetterPic plugin" />    
+    <meta property="og:description" content="LetterPic converts usernames into canvas based avatar pictures. " />
+    <meta property="og:url" content="https://goo.gl/tJAevN" />
+    <meta property="article:author" content="George Yakovlev" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/yakovlevga/letterpic/master/resources/letterpic.png" />
+    <meta property="og:image:type" content="image/jpeg" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <style>
+        .letterpic {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+        }
+
+        main .letterpic {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+        }
+    </style>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/jquery.letterpic.js"></script>
+    <script>
+        $(function() {
+            $(".letterpic").letterpic({
+                fill: 'color',
+                initial: {
+                    color: {
+                        "A" : "red",
+                        "B" : "blue",
+                        "M" : "green",
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Letterpic</a>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <div title="Mike Green" data-letterpic-key="M" class="letterpic"></div>
+        </form>
+      </div>
+    </nav>
+
+    <main class="container" style="margin-top: 100px;">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-12">
+                    <pre><code>
+                        JS:
+                        $(".letterpic").letterpic({
+                            fill: 'color',
+                            initial: {
+                                color: {
+                                    "A" : "red",
+                                    "B" : "blue",
+                                    "M" : "green",
+                                }
+                            }
+                        });
+
+                        HTML:
+                        
+                        &lt;div class="letterpic" title="Mike Green" data-letterpic-key="M"&gt;&lt;/div&gt;
+                    </code></pre>
+
+                    Now you can define attribute <code>data-letterpic-key</code> to manualy set color dictionary value of user.<br/>
+                    By default this key is equals to users initials from <code>title</code> attribute.<br/>
+                    Also you can pass <code>maxInitialsLength</code> as parameter of $.letterpic, to define max length of initals string on avatar,<br/>
+                    by default it's value is 2.
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="media">
+                    <div class="letterpic mr-2" title="Mike Green" data-letterpic-key="M"></div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Mike Green</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="media">
+                    <div class="letterpic mr-2" title="Mike Green" data-letterpic-key="M"></div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Mike Patton</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="media">
+                    <div class="letterpic mr-2" title="Andrew Red" data-letterpic-key="A"></div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Andrew Red</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 mb-4">
+            <div class="col-md-4">
+                <div class="media">
+                    <div class="letterpic mr-2" title="Andy" data-letterpic-key="A"></div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Andy</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="media">
+                    <div class="letterpic mr-2" title="Bob" data-letterpic-key="B"></div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Bob</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="media">
+                    <div class="letterpic mr-2" title="Jhon Doe"></div>
+                    <div class="media-body">
+                        <h5 class="mt-0">Jhon Doe</h5>
+                        This letterpic doesn't have <code>data-letterpic-key</code>.
+                        It's key generated from title => JD. We didn't pass 'JD' to initial colors,<br/>
+                        it will get it from default colors or from colors array passed on $.letterpic.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
