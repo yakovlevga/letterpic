@@ -33,7 +33,7 @@
     }
 
     var LetterPic = function(options) {
-        self = this;   
+        var self = this;   
         
         // consts
         self.fillTypeColor = "color";
