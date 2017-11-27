@@ -81,7 +81,7 @@
         function BgProvider(settings, bgs, drawBgFunc) {
             var provider = this;
             provider.bgs = bgs;
-            var bgs = provider.bgs.slice().reverse();        
+            var bgs = [];
             
             provider.draw = function($canvas, key, text) {
 
@@ -113,8 +113,8 @@
                     self.cache[fill] = {};
                 }
                 if(!self.cache[fill][key]) {
-                    if(!bgs.length)
-                        colors = provider.bgs.slice().reverse();                        
+                    if(bgs.length === 0)
+                        bgs = provider.bgs.slice().reverse();                        
                     bg = bgs.pop();
                     self.cache[fill][key] = bg;
                 }
