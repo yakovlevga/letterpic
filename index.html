@@ -18,7 +18,14 @@
     <script src="js/jquery.letterpic.js"></script>
     <script>
         $(function() {
-            $(".letterpic").letterpic()
+            $(".letterpic").letterpic({
+                onElementReplaced: function($el, isBrokenImage) {
+                    console.log($el, isBrokenImage);
+                },
+                onImageError: function($el, url) {
+                    console.log('Image loading error: ' + url);
+                }
+            }).click(function() { alert('chaining'); });
 
             var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             function getRandomInitials() {
@@ -38,7 +45,7 @@
             for(var i = 0; i < 19; i++) {
                 addLetterpicEl($gradientDemo);                
             }
-            $gradientDemo.find(".letterpic").letterpic();
+            $gradientDemo.find(".letterpic").letterpic().click(function() { alert('chaining'); });
 
             // custom gradient demo
             var $gradientCustomDemo = $(".gradient-custom-demo");

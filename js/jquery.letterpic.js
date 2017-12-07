@@ -196,7 +196,10 @@
     }
 
     $.fn.letterpic = function (options) {
-        var self = this;        
+        var self = this;  
+        self.$letterpics = [];
+        self.options = options || {};
+
         var lp = new LetterPic(options);        
 
         this.each(function () {
@@ -204,7 +207,10 @@
 
             if ($el.is("img")) {
                 if (!isImageOk($el[0])) {
-                    replaceWithCanvas($el);
+                    var $canvas = replaceWithCanvas($el);
+                    if(self.options.onImageError) {
+                        self.options.onImageError($canvas, $el.attr('src'));
+                    }
                 }
                 else {
                     $el.on("error", onImageError);
@@ -249,10 +255,14 @@
         function onImageError(event) {
             var $img = $(event.target);
             $img.off("error", onImageError);
-            replaceWithCanvas($img);
+            replaceWithCanvas($img, true);
+            
+            if(self.options.onImageError) {
+                self.options.onImageError($canvas, $img.attr('src'));
+            }
         }
 
-        function replaceWithCanvas($el) {
+        function replaceWithCanvas($el, isBrokenImage) {
             var $canvas;
             if ($el.is("canvas")) {
                 $canvas = $el;
@@ -268,6 +278,19 @@
             var key = getKey($canvas);
             var text = getInitials($canvas);
             lp.drawProvider.draw($canvas, key, text);
+
+            self.$letterpics.push($canvas);
+            
+            if(self.options.onElementReplaced) {
+                isBrokenImage = isBrokenImage || false;
+                self.options.onElementReplaced($canvas, isBrokenImage); 
+            }
+
+            return $canvas;
         }
+
+        return $($.map(self.$letterpics, function($el){
+            return $el.get();
+        }));;
     };
 }(jQuery));
