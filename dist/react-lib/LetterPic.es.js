@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -25,6 +25,18 @@ var __assign = function() {
     };
     return __assign.apply(this, arguments);
 };
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
 
 var colors = [
     '#f44336',
@@ -340,10 +352,16 @@ var draw = function (name, userSettings, key) {
     return { asDataString: asDataURL, asImage: asImage, asCanvas: asCanvas, insureImg: insureImg };
 };
 
-var LetterPic = function () {
-    var img = draw('My Name', undefined, 'asdasdasd').asDataString();
-    return React.createElement("img", { src: img });
+var LetterPic = function (_a) {
+    var name = _a.name, props = __rest(_a, ["name"]);
+    var _b = useState(null), src = _b[0], setSrc = _b[1];
+    var lp = draw(name, props, name).asDataString();
+    console.log(lp);
+    useEffect(function () {
+        setSrc(lp);
+    }, [lp]);
+    return src === null ? null : React.createElement("img", { src: src });
 };
 
 export { LetterPic };
-//# sourceMappingURL=index.es.js.map
+//# sourceMappingURL=LetterPic.es.js.map

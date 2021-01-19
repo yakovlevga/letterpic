@@ -64,15 +64,15 @@ export default [
   },
 
   {
-    input: 'src/lib-react/index.ts',
+    input: 'src/react-lib/LetterPic.tsx',
     output: [
       {
-        file: 'dist/react/index.es.js',
+        file: 'dist/react-lib/LetterPic.es.js',
         format: 'es',
         sourcemap: true,
       },
       {
-        file: 'dist/react/index.js',
+        file: 'dist/react-lib/LetterPic.js',
         format: 'cjs',
         sourcemap: true,
       },
