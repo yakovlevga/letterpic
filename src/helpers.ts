@@ -1,4 +1,3 @@
-import { defaultColors } from 'defaults';
 import { md5hash } from 'md5';
 import { LetterPickFontSettings, LetterPicSettings } from 'types/core';
 
@@ -24,15 +23,6 @@ export const drawText = (
 
   context.fillStyle = settings.fontColor;
   context.fillText(text, posX, posY);
-};
-
-export const getPreparedCanvasContext = (
-  settings: LetterPicSettings
-): CanvasRenderingContext2D => {
-  const canvas = document.createElement('canvas');
-  canvas.width = settings.size;
-  canvas.height = settings.size;
-  return canvas.getContext('2d')!;
 };
 
 export const getInitials = (text: string) => {
@@ -61,7 +51,4 @@ export const getRandomColorByString = (s: string) =>
 export const getDefinedColorByString = (
   settings: LetterPicSettings,
   s: string
-) => {
-  const colors = settings.colors || defaultColors;
-  return getItemByString(s, colors);
-};
+) => getItemByString(s, settings.colors!);

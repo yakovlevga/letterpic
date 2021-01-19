@@ -1,6 +1,6 @@
 import { LetterPicSettings } from 'types/core';
 
-export const defaultColors = [
+const colors = [
   '#f44336',
   '#673ab7',
   '#03a9f4',
@@ -46,4 +46,5 @@ export const LETTER_PIC_DEFAULTS: LetterPicSettings = {
   fontStrokeColor: '#000',
   fontSize: 0.45,
   maxInitialsLength: 2,
+  colors,
 };

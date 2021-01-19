@@ -1,57 +1,59 @@
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 import { uglify } from 'rollup-plugin-uglify';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 
 const input = 'src/letterpic.ts';
 
-const plugins = [
-  typescript({
-    typescript: require('typescript'),
-  }),
-];
-
-const config = {
-  input,
-  output: {
-    sourcemap: true,
-  },
-  plugins,
-};
-
 export default [
   {
-    ...config,
+    input: 'src/letterpic-node.ts',
     output: {
-      ...config.output,
-      file: pkg.module,
-      format: 'esm',
-    },
-  },
-  {
-    ...config,
-    output: {
-      ...config.output,
-      file: pkg.module,
+      file: pkg.main,
       format: 'cjs',
+      sourcemap: true,
     },
+    plugins: [
+      typescript({
+        typescript: require('typescript'),
+        compilerOptions: {
+          target: 'es6',
+        },
+      }),
+      nodeResolve(),
+      commonjs(),
+    ],
+    external: ['canvas'],
   },
   {
-    ...config,
+    input: 'src/letterpic-browser.ts',
     output: {
-      ...config.output,
       file: 'dist/letterpic.js',
       format: 'iife',
       name: 'letterpic',
+      sourcemap: true,
     },
+    plugins: [
+      typescript({
+        typescript: require('typescript'),
+      }),
+      uglify(),
+    ],
   },
   {
-    ...config,
+    input: 'src/letterpic-browser.ts',
     output: {
-      ...config.output,
       file: 'dist/letterpic.min.js',
       format: 'iife',
       name: 'letterpic',
+      sourcemap: false,
     },
-    plugins: [...config.plugins, uglify()],
+    plugins: [
+      typescript({
+        typescript: require('typescript'),
+      }),
+      uglify(),
+    ],
   },
 ];

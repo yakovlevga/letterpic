@@ -2,14 +2,9 @@ import {
   drawText,
   getDefinedColorByString,
   getItemByString,
-  getPreparedCanvasContext,
   getRandomColorByString,
 } from 'helpers';
-import type {
-  LetterPicGradient,
-  LetterPicProvider,
-  LetterPicSettings,
-} from 'types/core';
+import type { LetterPicGradient, LetterPicProvider } from 'types/core';
 
 const getLinearGradient = (
   context: CanvasRenderingContext2D,
@@ -25,13 +20,7 @@ const getLinearGradient = (
 
 // const reverseString = (s: string) => s.split('').reverse().join('');
 
-export const gradient: LetterPicProvider = (
-  text: string,
-  key: string,
-  settings: LetterPicSettings
-) => {
-  const context = getPreparedCanvasContext(settings);
-
+export const gradient: LetterPicProvider = (text, key, settings, context) => {
   let gradient: LetterPicGradient;
   if (settings.gradients !== undefined && settings.gradients.length > 0) {
     gradient = getItemByString(key, settings.gradients);

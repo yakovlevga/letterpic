@@ -3,14 +3,14 @@ import {
   LetterPicFillType,
   LetterPicSettings,
 } from 'types/core';
-import { LETTER_PIC_DEFAULTS } from 'defaults';
+import { LETTER_PIC_DEFAULTS } from 'defaultSettings';
 import { palette } from 'providers/palette';
 import { gradient } from 'providers/gradient';
 import { color } from 'providers/color';
-// import { bgProviderImage } from 'providers/bgProviderImage.ts1';
 import { getInitials } from 'helpers';
+import { createCanvas, Canvas } from 'canvas';
 
-const PROVIDERS: Record<LetterPicFillType, LetterPicProvider> = {
+const Providers: Record<LetterPicFillType, LetterPicProvider> = {
   palette,
   gradient,
   color,
@@ -28,42 +28,27 @@ export const draw = (
     ...userSettings,
   };
 
-  const provider = PROVIDERS[settingsWithDefaults.fill];
+  const provider = Providers[settingsWithDefaults.fill];
 
   const asCanvas = () => {
+    const canvas = createCanvas(200, 200);
+    const context = canvas.getContext('2d');
+
     const initials = getInitials(name);
-    return provider(initials, key, settingsWithDefaults);
+    return provider(initials, key, settingsWithDefaults, context);
   };
 
-  const asDataString = (): string => {
+  const asDataUrl = (
+    mimeType?: 'image/jpeg' | 'image/png',
+    quality?: number
+  ) => {
     if (cache[key] === undefined) {
-      cache[key] = asCanvas().toDataURL();
+      cache[key] = asCanvas().toDataURL(mimeType, quality);
     }
     return cache[key]!;
   };
 
-  const asImage = () => {
-    const img = document.createElement('img');
-    img.src = asDataString();
-    return img;
-  };
-
-  const insureImg = (img: HTMLImageElement) => {
-    const imgErrorHandler = () => {
-      img.removeEventListener('error', imgErrorHandler);
-      img.src = asDataString();
-    };
-
-    const imgLoadHandler = () => {
-      img.removeEventListener('error', imgErrorHandler);
-      img.removeEventListener('load', imgLoadHandler);
-    };
-
-    img.addEventListener('error', imgErrorHandler);
-    img.addEventListener('load', imgLoadHandler);
-  };
-
-  return { asDataString, asImage, asCanvas, insureImg };
+  return { asCanvas, asDataUrl };
 };
 
 // function isImageOk(img: HTMLImageElement): boolean {

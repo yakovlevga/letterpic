@@ -13,7 +13,7 @@ export type LetterPickFontSettings = {
 export type LetterPicSettings = LetterPickFontSettings & {
   fill: LetterPicFillType;
   size: number;
-  colors?: LetterPicColor[];
+  colors: LetterPicColor[];
   gradients?: LetterPicGradient[];
   maxInitialsLength: 2;
 };
@@ -21,5 +21,6 @@ export type LetterPicSettings = LetterPickFontSettings & {
 export type LetterPicProvider = (
   initials: string,
   cacheKey: string,
-  settings: LetterPicSettings
+  settings: LetterPicSettings,
+  context: CanvasRenderingContext2D
 ) => HTMLCanvasElement;
