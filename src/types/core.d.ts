@@ -1,7 +1,7 @@
 type LetterPicColor = string;
 type LetterPicGradient = LetterPicColor[];
 
-export type LetterPicFillType = 'color' | 'gradient' | 'image';
+export type LetterPicFillType = 'palette' | 'gradient' | 'color';
 
 export type LetterPickFontSettings = {
   font: string;
@@ -13,24 +13,13 @@ export type LetterPickFontSettings = {
 export type LetterPicSettings = LetterPickFontSettings & {
   fill: LetterPicFillType;
   size: number;
-
   colors?: LetterPicColor[];
   gradients?: LetterPicGradient[];
-
-  imageOverlayColor: string;
   maxInitialsLength: 2;
-  // if it's true, it uses global cache for different calls
-  useGlobalCache: boolean;
-  // set default images
-  images: string[];
-};
-
-export type LetterPicCache = {
-  backgrounds: Partial<Record<string, CanvasFillStrokeStyles['fillStyle']>>;
 };
 
 export type LetterPicProvider = (
+  initials: string,
+  cacheKey: string,
   settings: LetterPicSettings
-) => {
-  draw: (initials: string, cacheKey: string) => HTMLCanvasElement;
-};
+) => HTMLCanvasElement;

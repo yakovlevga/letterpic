@@ -1,8 +1,27 @@
 import { LetterPickFontSettings, LetterPicSettings } from 'types/core';
+import { Md5 } from 'ts-md5/src/md5';
 
 const CANVAS_CONTEXT_SCALE = window.devicePixelRatio;
 
 const defaultColors = [
+  '#f44336',
+  '#673ab7',
+  '#03a9f4',
+  '#4caf50',
+  '#ffeb3b',
+  '#ff5722',
+  '#607d8b',
+  '#e91e63',
+  '#3f51b5',
+  '#00bcd4',
+  '#8bc34a',
+  '#ffc107',
+  '#795548',
+  '#2196f3',
+  '#009688',
+  '#cddc39',
+  '#ff9800',
+  '#9e9e9e',
   '#1abc9c',
   '#2ecc71',
   '#3498db',
@@ -12,7 +31,6 @@ const defaultColors = [
   '#27ae60',
   '#2980b9',
   '#8e44ad',
-  '#2c3e50',
   '#f1c40f',
   '#e67e22',
   '#e74c3c',
@@ -21,8 +39,6 @@ const defaultColors = [
   '#f39c12',
   '#d35400',
   '#c0392b',
-  '#bdc3c7',
-  '#7f8c8d',
 ];
 
 export const drawText = (
@@ -87,21 +103,11 @@ export const getInitials = (text: string) => {
   return result;
 };
 
-const hashCode = (s: string): number => {
-  var hash = 0,
-    i,
-    chr;
-  for (i = 0; i < s.length; i++) {
-    chr = s.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-
-  return hash;
-};
+const stringToInteger = (s: string): number =>
+  Md5.hashStr(s, true)![0] as number;
 
 export const getItemByString = <T>(s: string, arr: T[]): T => {
-  const idx = Math.abs(hashCode(s)) % arr.length;
+  const idx = Math.abs(stringToInteger(s)) % arr.length;
   return arr[idx];
 };
 

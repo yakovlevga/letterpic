@@ -1,5 +1,43 @@
 import { LetterPicSettings } from 'types/core';
 
+export const defaultColors = [
+  '#f44336',
+  '#673ab7',
+  '#03a9f4',
+  '#4caf50',
+  '#ffeb3b',
+  '#ff5722',
+  '#607d8b',
+  '#e91e63',
+  '#3f51b5',
+  '#00bcd4',
+  '#8bc34a',
+  '#ffc107',
+  '#795548',
+  '#2196f3',
+  '#009688',
+  '#cddc39',
+  '#ff9800',
+  '#9e9e9e',
+  '#1abc9c',
+  '#2ecc71',
+  '#3498db',
+  '#9b59b6',
+  '#34495e',
+  '#16a085',
+  '#27ae60',
+  '#2980b9',
+  '#8e44ad',
+  '#f1c40f',
+  '#e67e22',
+  '#e74c3c',
+  '#ecf0f1',
+  '#95a5a6',
+  '#f39c12',
+  '#d35400',
+  '#c0392b',
+];
+
 export const LETTER_PIC_DEFAULTS: LetterPicSettings = {
   fill: 'gradient',
   size: 100,
@@ -7,17 +45,5 @@ export const LETTER_PIC_DEFAULTS: LetterPicSettings = {
   fontColor: '#fff',
   fontStrokeColor: '#000',
   fontSize: 0.45,
-  imageOverlayColor: 'rgba(0, 0, 0, 0)',
   maxInitialsLength: 2,
-  // if it's true, it uses global cache for different calls
-  useGlobalCache: true,
-  // set default images
-  images: [],
 };
-
-const defaultImgPath = 'patterns';
-const defaultImgCount = 8;
-const defaultImgExt = '.png';
-for (let i = 1; i <= defaultImgCount; i++) {
-  LETTER_PIC_DEFAULTS.images.push(defaultImgPath + '/' + i + defaultImgExt);
-}

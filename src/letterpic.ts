@@ -4,77 +4,74 @@ import {
   LetterPicSettings,
 } from 'types/core';
 import { LETTER_PIC_DEFAULTS } from 'defaults';
-import { bgProviderColor } from 'providers/bgProviderColor';
-import { bgProviderGradient } from 'providers/bgProviderGradient';
+import { palette } from 'providers/palette';
+import { gradient } from 'providers/gradient';
+import { color } from 'providers/color';
 // import { bgProviderImage } from 'providers/bgProviderImage.ts1';
-import { getInitials } from 'providers/helpers';
+import { getInitials } from 'helpers';
 
 const PROVIDERS: Record<LetterPicFillType, LetterPicProvider> = {
-  color: bgProviderColor,
-  gradient: bgProviderGradient,
-  image: bgProviderColor,
-  // image: bgProviderImage,
+  palette,
+  gradient,
+  color,
 };
 
-const initGlobals = () => {
-  if (!window.LetterPicCache) {
-    window.LetterPicCache = window.LetterPicCache || {
-      backgrounds: {},
-    };
-  }
-};
+const cache: Partial<Record<string, string>> = {};
 
-export const letterpic = (userSettings?: Partial<LetterPicSettings>) => {
-  initGlobals();
-
-  const settings: LetterPicSettings = {
-    ...userSettings,
+export const draw = (
+  name: string,
+  userSettings?: Partial<LetterPicSettings>,
+  key: string = name
+) => {
+  const settingsWithDefaults: LetterPicSettings = {
     ...LETTER_PIC_DEFAULTS,
-    fill: getFillTypeFromSettings(userSettings),
+    ...userSettings,
   };
 
-  const provider = PROVIDERS[settings.fill](settings);
+  const provider = PROVIDERS[settingsWithDefaults.fill];
 
-  const asDataString = (text: string) => {
-    const initials = getInitials(text);
-    return provider.draw(initials, text).toDataURL();
+  const asCanvas = () => {
+    const initials = getInitials(name);
+    return provider(initials, key, settingsWithDefaults);
   };
 
-  const asImage = (text: string) => {
+  const asDataString = (): string => {
+    if (cache[key] === undefined) {
+      cache[key] = asCanvas().toDataURL();
+    }
+    return cache[key]!;
+  };
+
+  const asImage = () => {
     const img = document.createElement('img');
-    img.src = asDataString(text);
+    img.src = asDataString();
     return img;
   };
 
-  return { asDataString, asImage };
-  // TODO
-  // if (self.settings.initial) {
-  //   for (var fill in self.settings.initial) {
-  //     if (!self.cache[fill]) self.cache[fill] = {};
-  //     var bgs = self.settings.initial[fill];
-  //     for (var key in bgs) {
-  //       self.cache[fill][key] = bgs[key];
-  //     }
-  //   }
-  // }
-  // self.drawProvider = self.drawProviders[self.settings.fill](self.settings);
+  const insureImg = (img: HTMLImageElement) => {
+    const imgErrorHandler = () => {
+      img.removeEventListener('error', imgErrorHandler);
+      img.src = asDataString();
+    };
+
+    const imgLoadHandler = () => {
+      img.removeEventListener('error', imgErrorHandler);
+      img.removeEventListener('load', imgLoadHandler);
+    };
+
+    img.addEventListener('error', imgErrorHandler);
+    img.addEventListener('load', imgLoadHandler);
+  };
+
+  return { asDataString, asImage, asCanvas, insureImg };
 };
 
-function getFillTypeFromSettings(
-  userSettings?: Partial<LetterPicSettings>
-): LetterPicFillType {
-  if (userSettings?.fill !== undefined) {
-    return userSettings?.fill;
-  } else if (userSettings?.colors !== undefined) {
-    return 'color';
-  } else if (userSettings?.gradients !== undefined) {
-    return 'gradient';
-  } else if (userSettings?.images !== undefined) {
-    return 'image';
-  }
-
-  return LETTER_PIC_DEFAULTS.fill;
-}
+// function isImageOk(img: HTMLImageElement): boolean {
+//   if (!img.complete || (typeof img.naturalWidth !== "undefined" && img.naturalWidth === 0)) {
+//       return false;
+//   }
+//   return true;
+// }
 
 // $.fn.letterpic = function (options) {
 //     var self = this;

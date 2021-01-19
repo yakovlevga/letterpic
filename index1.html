@@ -3,10 +3,6 @@
   <head>
     <script src="dist/letterpic.js"></script>
     <script>
-      var lp = LetterPic.letterpic({
-        fill: 'color',
-      });
-
       const names = [
         'Marilyn Monroe',
         'Abraham Lincoln',
@@ -25,14 +21,14 @@
         'Elvis Presley',
         'Albert Einstein',
         'Paul McCartney',
-        'Queen Victoria (',
+        'Queen Victoria',
         'Pope Francis',
         'Jawaharlal Nehru ',
-        'Leonardo da Vinci (',
+        'Leonardo da Vinci',
         'Vincent Van Gogh',
         'Franklin D. Roosevelt',
         'Pope John Paul II',
-        'Thomas Edison (',
+        'Thomas Edison',
         'Rosa Parks ',
         'Lyndon Johnson',
         'Ludwig Beethoven',
@@ -68,7 +64,7 @@
         'Oscar Wilde ',
         'Coco Chanel ',
         'Charles de Gaulle',
-        'Amelia Earhart (',
+        'Amelia Earhart',
         'John M Keynes',
         'Louis Pasteur ',
         'Mikhail Gorbachev',
@@ -109,7 +105,7 @@
 
       var generate = function () {
         names.forEach(name => {
-          const img = lp.asImage(name);
+          const img = letterpic.draw(name).asImage(name);
           img.className = 'letterpic';
           document.body.appendChild(img);
         });
