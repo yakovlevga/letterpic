@@ -1,0 +1,26 @@
+import { drawText } from 'providers/helpers';
+import { LetterPicProvider, LetterPicSettings } from 'types/core';
+
+export const bgProviderImage: LetterPicProvider = (
+  settings: LetterPicSettings
+) => {
+  let bgIdx = 0;
+
+  const getBackground = (text: string): string => {
+    if (window.letterpic.backgrounds[text] === undefined) {
+      const nextColor = settings.colors[bgIdx++ % settings.colors.length];
+      window.letterpic.backgrounds[text] = nextColor;
+    }
+
+    return window.letterpic.backgrounds[text]!;
+  };
+
+  return (context: CanvasRenderingContext2D, text: string): void => {
+    const img = new Image();
+    img.onload = function () {
+      context.drawImage(img, 0, 0, context.canvas.width, context.canvas.height);
+      drawText(context, settings, text);
+    };
+    img.src = getBackground(text);
+  };
+};

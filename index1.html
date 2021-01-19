@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="dist/letterpic.js"></script>
+    <script>
+      var lp = LetterPic.letterpic({
+        fill: 'color',
+      });
+
+      const names = [
+        'Marilyn Monroe',
+        'Abraham Lincoln',
+        'Nelson Mandela ',
+        'John F. Kennedy',
+        'Martin Luther King ',
+        'Queen Elizabeth ',
+        'Winston Churchill ',
+        'Donald Trump ',
+        'Bill Gates ',
+        'Muhammad Ali',
+        'Mahatma Gandhi',
+        'Mother Teresa',
+        'Christopher Columbus',
+        'Charles Darwin',
+        'Elvis Presley',
+        'Albert Einstein',
+        'Paul McCartney',
+        'Queen Victoria (',
+        'Pope Francis',
+        'Jawaharlal Nehru ',
+        'Leonardo da Vinci (',
+        'Vincent Van Gogh',
+        'Franklin D. Roosevelt',
+        'Pope John Paul II',
+        'Thomas Edison (',
+        'Rosa Parks ',
+        'Lyndon Johnson',
+        'Ludwig Beethoven',
+        'Oprah Winfrey',
+        'Indira Gandhi',
+        'Eva Peron',
+        'Benazir Bhutto',
+        'George Orwell ',
+        'Desmond Tutu',
+        'Dalai Lama',
+        'Walt Disney',
+        'Neil Armstrong',
+        'Peter Sellers',
+        'Barack Obama',
+        'Malcolm X',
+        'J.K.Rowling',
+        'Richard Branson',
+        'Pele',
+        'Angelina Jolie',
+        'Jesse Owens',
+        'John Lennon',
+        'Henry Ford',
+        'Haile Selassie',
+        'Joseph Stalin',
+        'Lord Baden Powell',
+        'Michael Jordon',
+        'Vladimir Lenin',
+        'Ingrid Bergman',
+        'Fidel Castro',
+        'Leo Tolstoy',
+        'Greta Thunberg',
+        'Pablo Picasso',
+        'Oscar Wilde ',
+        'Coco Chanel ',
+        'Charles de Gaulle',
+        'Amelia Earhart (',
+        'John M Keynes',
+        'Louis Pasteur ',
+        'Mikhail Gorbachev',
+        'Plato',
+        'Adolf Hitler ',
+        'Sting',
+        'Mary Magdalene',
+        'Alfred Hitchcock',
+        'Michael Jackson',
+        'Madonna ',
+        'Mata Hari ',
+        'Cleopatra',
+        'Grace Kelly',
+        'Malala Yousafzai',
+        'Steve Jobs',
+        'Ronald Reagan',
+        'Lionel Messi',
+        'Babe Ruth',
+        'Bob Geldof',
+        'Roger Federer',
+        'Sigmund Freud',
+        'Woodrow Wilson',
+        'Mao Zedong',
+        'Katherine Hepburn',
+        'Audrey Hepburn',
+        'David Beckham',
+        'Usain Bolt',
+        'Carl Lewis',
+        'Prince Charles',
+        'Jacqueline Kennedy Onassis',
+        'C.S. Lewis ',
+        'Billie Holiday',
+        'J.R.R. Tolkien',
+        'Billie Jean King',
+        'Margaret Thatcher',
+        'Anne Frank',
+      ];
+
+      var generate = function () {
+        names.forEach(name => {
+          const img = lp.asImage(name);
+          img.className = 'letterpic';
+          document.body.appendChild(img);
+        });
+      };
+    </script>
+
+    <style>
+      .letterpic {
+        width: 60px;
+        height: 60px;
+        margin-right: 5px;
+        border-radius: 30px;
+      }
+    </style>
+  </head>
+
+  <body onload="generate()"></body>
+</html>
