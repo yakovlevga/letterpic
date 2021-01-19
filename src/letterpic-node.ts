@@ -8,7 +8,7 @@ import { palette } from 'providers/palette';
 import { gradient } from 'providers/gradient';
 import { color } from 'providers/color';
 import { getInitials } from 'helpers';
-import { createCanvas, Canvas } from 'canvas';
+import { createCanvas } from 'canvas';
 
 const Providers: Record<LetterPicFillType, LetterPicProvider> = {
   palette,

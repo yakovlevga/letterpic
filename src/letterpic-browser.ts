@@ -3,11 +3,11 @@ import {
   LetterPicFillType,
   LetterPicSettings,
 } from 'types/core';
-import { LETTER_PIC_DEFAULTS } from 'defaultSettings';
-import { palette } from 'providers/palette';
-import { gradient } from 'providers/gradient';
-import { color } from 'providers/color';
-import { getInitials } from 'helpers';
+import { LETTER_PIC_DEFAULTS } from './defaultSettings';
+import { palette } from './providers/palette';
+import { gradient } from './providers/gradient';
+import { color } from './providers/color';
+import { getInitials } from './helpers';
 
 const PROVIDERS: Record<LetterPicFillType, LetterPicProvider> = {
   palette,

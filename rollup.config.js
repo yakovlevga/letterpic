@@ -4,8 +4,6 @@ import { uglify } from 'rollup-plugin-uglify';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
-const input = 'src/letterpic.ts';
-
 export default [
   {
     input: 'src/letterpic-node.ts',
@@ -26,21 +24,29 @@ export default [
     ],
     external: ['canvas'],
   },
+
   {
     input: 'src/letterpic-browser.ts',
-    output: {
-      file: 'dist/letterpic.js',
-      format: 'iife',
-      name: 'letterpic',
-      sourcemap: true,
-    },
+    output: [
+      {
+        file: 'dist/letterpic.js',
+        format: 'iife',
+        name: 'letterpic',
+        sourcemap: true,
+      },
+      {
+        file: pkg.module,
+        format: 'es',
+        sourcemap: true,
+      },
+    ],
     plugins: [
       typescript({
         typescript: require('typescript'),
       }),
-      uglify(),
     ],
   },
+
   {
     input: 'src/letterpic-browser.ts',
     output: {
@@ -56,4 +62,40 @@ export default [
       uglify(),
     ],
   },
+
+  {
+    input: 'src/lib-react/index.ts',
+    output: [
+      {
+        file: 'dist/react/index.es.js',
+        format: 'es',
+        sourcemap: true,
+      },
+      {
+        file: 'dist/react/index.js',
+        format: 'cjs',
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      typescript({
+        typescript: require('typescript'),
+      }),
+    ],
+    external: ['react'],
+  },
+
+  // {
+  //   input: 'src/letterpic-react.ts',
+  //   output: {
+  //     file: 'dist/react/index.js',
+  //     format: 'es',
+  //     sourcemap: true,
+  //   },
+  //   plugins: [
+  //     typescript({
+  //       typescript: require('typescript'),
+  //     }),
+  //   ],
+  // },
 ];

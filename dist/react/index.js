@@ -2,7 +2,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var canvas = require('canvas');
+var React = require('react');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -297,30 +301,57 @@ var color = function (text, key, settings, context) {
     return context.canvas;
 };
 
-var Providers = {
+var PROVIDERS = {
     palette: palette,
     gradient: gradient,
     color: color,
 };
 var cache = {};
+var getPreparedCanvasContext = function (settings) {
+    var canvas = document.createElement('canvas');
+    canvas.width = settings.size;
+    canvas.height = settings.size;
+    return canvas.getContext('2d');
+};
 var draw = function (name, userSettings, key) {
     if (key === void 0) { key = name; }
     var settingsWithDefaults = __assign(__assign({}, LETTER_PIC_DEFAULTS), userSettings);
-    var provider = Providers[settingsWithDefaults.fill];
+    var provider = PROVIDERS[settingsWithDefaults.fill];
     var asCanvas = function () {
-        var canvas$1 = canvas.createCanvas(200, 200);
-        var context = canvas$1.getContext('2d');
         var initials = getInitials(name);
+        var context = getPreparedCanvasContext(settingsWithDefaults);
         return provider(initials, key, settingsWithDefaults, context);
     };
-    var asDataUrl = function (mimeType, quality) {
+    var asDataURL = function (type, quality) {
         if (cache[key] === undefined) {
-            cache[key] = asCanvas().toDataURL(mimeType, quality);
+            cache[key] = asCanvas().toDataURL(type, quality);
         }
         return cache[key];
     };
-    return { asCanvas: asCanvas, asDataUrl: asDataUrl };
+    var asImage = function () {
+        var img = document.createElement('img');
+        img.src = asDataURL();
+        return img;
+    };
+    var insureImg = function (img) {
+        var imgErrorHandler = function () {
+            img.removeEventListener('error', imgErrorHandler);
+            img.src = asDataURL();
+        };
+        var imgLoadHandler = function () {
+            img.removeEventListener('error', imgErrorHandler);
+            img.removeEventListener('load', imgLoadHandler);
+        };
+        img.addEventListener('error', imgErrorHandler);
+        img.addEventListener('load', imgLoadHandler);
+    };
+    return { asDataString: asDataURL, asImage: asImage, asCanvas: asCanvas, insureImg: insureImg };
 };
 
-exports.draw = draw;
+var LetterPic = function () {
+    var img = draw('My Name', undefined, 'asdasdasd').asDataString();
+    return React__default['default'].createElement("img", { src: img });
+};
+
+exports.LetterPic = LetterPic;
 //# sourceMappingURL=index.js.map

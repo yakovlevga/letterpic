@@ -13,7 +13,8 @@
     "esModuleInterop": true,
     "baseUrl": "src",
     "sourceMap": true,    
-    "typeRoots": ["typings"]
+    "typeRoots": ["typings"],
+    "jsx": "react",
   },
   "exclude": ["node_modules"]
 }
