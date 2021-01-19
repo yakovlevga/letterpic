@@ -331,7 +331,19 @@ var draw = function (name, userSettings, key) {
         img.src = asDataString();
         return img;
     };
-    return { asDataString: asDataString, asImage: asImage, asCanvas: asCanvas };
+    var insureImg = function (img) {
+        var imgErrorHandler = function () {
+            img.removeEventListener('error', imgErrorHandler);
+            img.src = asDataString();
+        };
+        var imgLoadHandler = function () {
+            img.removeEventListener('error', imgErrorHandler);
+            img.removeEventListener('load', imgLoadHandler);
+        };
+        img.addEventListener('error', imgErrorHandler);
+        img.addEventListener('load', imgLoadHandler);
+    };
+    return { asDataString: asDataString, asImage: asImage, asCanvas: asCanvas, insureImg: insureImg };
 };
 
 exports.draw = draw;

@@ -3,4 +3,5 @@ export declare const draw: (name: string, userSettings?: Partial<LetterPicSettin
     asDataString: () => string;
     asImage: () => HTMLImageElement;
     asCanvas: () => HTMLCanvasElement;
+    insureImg: (img: HTMLImageElement) => void;
 };
